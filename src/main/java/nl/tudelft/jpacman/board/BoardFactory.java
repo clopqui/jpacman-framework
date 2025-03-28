@@ -46,16 +46,20 @@ public class BoardFactory {
             for (int y = 0; y < height; y++) {
                 Square square = grid[x][y];
                 for (Direction dir : Direction.values()) {
-                    int dirX = (width + x + dir.getDeltaX()) % width;
-                    int dirY = (height + y + dir.getDeltaY()) % height;
-                    Square neighbour = grid[dirX][dirY];
-                    square.link(neighbour, dir);
+                    setLink(grid, width, height, x, y, square, dir);
                 }
             }
         }
 
         return board;
     }
+
+	private void setLink(Square[][] grid, int width, int height, int x, int y, Square square, Direction dir) {
+		int dirX = (width + x + dir.getDeltaX()) % width;
+		int dirY = (height + y + dir.getDeltaY()) % height;
+		Square neighbour = grid[dirX][dirY];
+		square.link(neighbour, dir);
+	}
 
     /**
      * Creates a new square that can be occupied by any unit.
